@@ -1,6 +1,5 @@
 package com.swu.shake.controller;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -8,57 +7,34 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.swu.shake.model.User;
-import com.swu.shake.service.UserService;
-
-//标识为控制层
 @Controller
 public class IndexController {
-	private UserService userService;
-
-	public UserService getUserService() {
-		return userService;
-	}
-
-	// 注入userservice
-	@Resource
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-
-	// 匹配用户的请求，当输入localhost:8080/shake/index.do,自动匹配到里面
 	@RequestMapping("/index")
 	public ModelAndView Show(HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+		System.out.println("01:" + request.getContentLength());
+		System.out.println("02:" + request.getContentType());
+		System.out.println("03:" + request.getContextPath());
+		System.out.println("04:" + request.getLocalAddr());
+		System.out.println("05:" + request.getLocalName());
+		System.out.println("06:" + request.getLocalPort());
+		System.out.println("07:" + request.getMethod());
+		System.out.println("08:" + request.getPathInfo());
+		System.out.println("09:" + request.getPathTranslated());
+		System.out.println("10:" + request.getProtocol());
+		System.out.println("11:" + request.getQueryString());
+		System.out.println("12:" + request.getRemoteAddr());
+		System.out.println("13:" + request.getRemoteHost());
+		System.out.println("14:" + request.getRemotePort());
+		System.out.println("15:" + request.getRemoteUser());
+		System.out.println("16:" + request.getRequestedSessionId());
+		System.out.println("17:" + request.getRequestURI());
+		System.out.println("18:" + request.getRequestURL());
+		System.out.println("19:" + request.getScheme());
+		System.out.println("20:" + request.getServerName());
+		System.out.println("21:" + request.getServerPort());
+		System.out.println("22:" + request.getServletPath());
 		mav.setViewName("index");// 系统自己会到webinfo下面找index.jsp
-		return mav;
-	}
-
-	// 前台请求到login.do的时候会加载到这里
-	@RequestMapping("/user/login")
-	public ModelAndView userLogin(HttpServletRequest request,
-			HttpSession session) throws Exception {
-		String name = request.getParameter("uname");
-		String password = request.getParameter("psw");
-		System.out.println(name + password);
-		ModelAndView mav = new ModelAndView();// 新建视图
-		User user = new User();
-		user.setName(name);
-		user.setPassword(password);
-		try {
-			User u = userService.login(name, password);
-			if (null != user) {
-				session.setAttribute("user", user);
-				mav.setViewName("comm/success");// 返回到susscc.jsp中
-				mav.addObject("user", user);
-			} else {
-				mav.setViewName("index");
-			}
-
-		} catch (IndexOutOfBoundsException e) {
-			mav.setViewName("index");
-		}
-
 		return mav;
 	}
 }

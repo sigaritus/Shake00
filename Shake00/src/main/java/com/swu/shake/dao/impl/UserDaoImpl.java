@@ -24,6 +24,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	// 注入hibernateUtil工具类
+	@Resource
 	public void setHibernateUtil(HibernateUtil hibernateUtil) {
 		this.hibernateUtil = hibernateUtil;
 	}
